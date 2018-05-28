@@ -5,10 +5,10 @@ class AppStore {
 	@observable public content:any; // data列表
 	@observable public loading = true;
 
-	constructor() {
-		this.content = [];
-		this.loading = true;
-	}
+	// constructor() {
+	// 	this.content = [];
+	// 	this.loading = true;
+	// }
 
 	@action.bound
 	public fetchTodoAdd = async (): Promise<any> => {

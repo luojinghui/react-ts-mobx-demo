@@ -19,20 +19,36 @@ class App extends React.Component<any, IState> {
 	}
 
 	public renderContent() {
-		const data = this.props.app.content.slice();
+		const data = this.props.app.content;
 		console.log("data: ",data);
 		
 		return(
-			this.props.app.content.slice().map((val, key) => {
+			this.props.app.content.map((val, key) => {
 				return (
-					<li key={key}>{val}</li>
+					<li key={key}>{key}</li>
 				)
 			})
 		)
 	}
 
 	public render() {
+		let info = []
+		if(!!this.props.app.content) {
+			info = 	this.props.app.content.map((val, key) => {
+				return (
+					<li key={key}>{key}
+					<p>{val.addTime}</p>
+					<p>{val.contactEmail}</p>
+					<p>{val.contactName}</p>
+					<p>{val.contactPhone}</p>
+					<p>{val.name}</p>
+					</li>
+				)
+			})
+		}
+	
 		return (
+
 			<div className="App">
 				<header className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
@@ -40,7 +56,7 @@ class App extends React.Component<any, IState> {
 				</header>
 				<ul className="App-intro">
 					{
-						this.renderContent()
+					info
 					}
 				</ul>
 				<Main name="hello wrold" />
