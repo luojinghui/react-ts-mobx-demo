@@ -1,10 +1,9 @@
 import * as React from 'react';
 import './App.css';
-// import Main from './components/Main';
+import Main from './components/Main';
 // import Timer from './components/Timer';
-import { TimerLess } from './components/TimerLess';
-import {observer, inject} from 'mobx-react';
-import { ITimer } from './interfaces';
+// import { TimerLess } from './components/TimerLess';
+import { observer, inject } from 'mobx-react';
 
 import logo from './logo.svg';
 
@@ -12,19 +11,25 @@ interface IState {
 	timer: number;
 }
 
-@inject('timer')
+@inject('timer', 'app')
 @observer
-class App extends React.Component<ITimer, IState> {
-	constructor(props: ITimer) {
-		super(props);
+class App extends React.Component<any, IState> {
+	public componentDidMount() {
+		this.props.app.fetchTodoAdd();
+	}
 
-		const { timer } = props.timer;
-		console.log("props:", props);
+	public renderContent() {
+		const data = this.props.app.content.slice();
+		console.log("data: ",data);
 		
-		this.state = {
-			timer
-		};
-  }
+		return(
+			this.props.app.content.slice().map((val, key) => {
+				return (
+					<li key={key}>{val}</li>
+				)
+			})
+		)
+	}
 
 	public render() {
 		return (
@@ -33,9 +38,14 @@ class App extends React.Component<ITimer, IState> {
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1 className="App-title">Welcome to React</h1>
 				</header>
-				{/* <Main name="hello wrold" /> */}
-        {/* <Timer {...this.props}/> */}
-				<TimerLess timer={this.state.timer} />
+				<ul className="App-intro">
+					{
+						this.renderContent()
+					}
+				</ul>
+				<Main name="hello wrold" />
+				{/* <Timer {...this.props}/> */}
+				{/* <TimerLess {...this.props} /> */}
 			</div>
 		);
 	}

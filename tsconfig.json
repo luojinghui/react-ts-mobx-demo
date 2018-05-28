@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
@@ -13,14 +12,12 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
+    "experimentalDecorators": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "experimentalDecorators": true,
-    "declaration": false,
-    "removeComments": true,
-    "noLib": false
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules",
@@ -30,5 +27,8 @@
     "webpack",
     "jest",
     "src/setupTests.ts"
+  ],
+  "types": [
+    "typePatches"
   ]
 }

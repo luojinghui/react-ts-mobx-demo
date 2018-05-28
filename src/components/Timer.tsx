@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { observer, inject } from "mobx-react";
-import { ITimer } from '../interfaces';
 
 interface State {}
 
 @inject('timer')
 @observer
-export default class Timer extends React.Component<ITimer, State> {
+export default class Timer extends React.Component<any, State> {
   constructor(props: any) {
     super(props);
     this.state = {};
@@ -16,12 +15,13 @@ export default class Timer extends React.Component<ITimer, State> {
 
   public onClickBtn():void {
     const tStore = this.props.timer;
-    console.log(tStore);   // undefined
+  
+    tStore.add();
   }
 
   public render() {
     const tStore = this.props.timer;
-    console.log(tStore); // undefined
+    console.log("tStore: ",tStore); // undefined
 
     return (
       <div onClick={this.onClickBtn}>Seconds passed: {tStore.timer}</div>

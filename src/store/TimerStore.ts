@@ -1,7 +1,8 @@
 import { observable, action, computed } from "mobx";
 
-export class TimerStore {
+class TimerStore {
   @observable public timer = 1;
+  @observable public data = [];
 
   constructor() {
     this.timer = 1;

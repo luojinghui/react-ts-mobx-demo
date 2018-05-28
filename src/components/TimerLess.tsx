@@ -1,13 +1,10 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
-interface IProps {
-  timer: number
-}
-
-export const TimerLess = (props: IProps) => {
+export const TimerLess = observer(({ timer }) => {
   return (
     <h1>
-      timer: {props.timer}
+      timer: {timer.getTimer}
     </h1>
   )
-}
+})

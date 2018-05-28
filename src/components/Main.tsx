@@ -23,7 +23,9 @@ export default class Main extends React.Component<IProps, IState> {
 	}
 
 	public componentDidMount() {
-		// const { a, b } = this.state;
+		const { a, b } = this.state;
+
+		add(a, b);
 	}
 
 	public render() {

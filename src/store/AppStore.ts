@@ -1,50 +1,54 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, runInAction } from 'mobx';
+import Http from '../tools/http';
 
 class AppStore {
-    @observable public TODOS = [];    // todos列表
-    @observable public NEWTODO = "";  // 新添加的todo
-    @observable public LOADING = true;  // Table-loading
-    @observable public KEY = 0;    // key
-    @observable public TOTAL = 0;   // 数据量
+	@observable public content:any; // data列表
+	@observable public loading = true;
 
-    constructor() {
-        this.KEY = 0
-    }
+	constructor() {
+		this.content = [];
+		this.loading = true;
+	}
 
-    @action public fetchTodoAdd(){
-        fetch('http://localhost/api/todos/add',{
-            body: JSON.stringify({
-                key: this.KEY,
-            }),
-            headers: {
-                "Content-type":"application/json"
-            },
-            method:'POST'
-        })
-            .then((response) => {
-                // console.log(response);
-                response.json().then(function(data: any){
-                    console.log(data);
-                    /*成功添加 总数加1 添加失败 最大_key恢复原有*/
-                
-                }.bind(this));
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
+	@action.bound
+	public fetchTodoAdd = async (): Promise<any> => {
+        try {
+					const {content: data} = await Http.getFecth("https://www.ainemo.com/benefit/api/rest/donator/page?pageIndex=1&pageSize=10&total=0");
 
-    // 添加
-    @action public AddTodo = () => {
-        this.KEY += 1;
-        this.fetchTodoAdd();
-    };
+					runInAction("get List data", () => {
+						console.log("get data", data);
+						console.log("this", this);
+						
+						this.content = data;
+						this.loading = false;
+					})
+					return data;
+				} catch(err) {
+					console.log("err: ", err);
+				}
+	}
 
-    // 计算长度
-    @computed get TodoListCount() {
-        return this.TODOS.length;
-    }
+	// 添加
+	@action
+	public AddTodo = () => {
+		this.fetchTodoAdd();
+	};
 
+	@computed
+	get data() {
+		return this.content;
+	}
+
+	@computed
+	get load() {
+		return this.loading;
+	}
+
+	// 计算长度
+	@computed
+	get TodoListCount() {
+		return this.content.length;
+	}
 }
 
 export default AppStore;
