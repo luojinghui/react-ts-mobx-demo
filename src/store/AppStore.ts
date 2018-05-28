@@ -5,13 +5,13 @@ class AppStore {
 	@observable public content:any; // data列表
 	@observable public loading = true;
 
-	// constructor() {
-	// 	this.content = [];
-	// 	this.loading = true;
-	// }
+	constructor() {
+		this.content = [];
+		this.loading = true;
+	}
 
 	@action.bound
-	public fetchTodoAdd = async (): Promise<any> => {
+	public fetchTodoAdd = async () => {
         try {
 					const {content: data} = await Http.getFecth("https://www.ainemo.com/benefit/api/rest/donator/page?pageIndex=1&pageSize=10&total=0");
 
